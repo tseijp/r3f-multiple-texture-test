@@ -4,13 +4,13 @@ export const map_fragment = /* GLSL */ `
  */
 #ifdef USE_MAP
         float m = 6.0;          // textures count
-        float a = vMapUv.x * m; // 0.0 ~ 6.0
-        float b = fract(a);     // 0.0 ~ 1.0
-        vec2 uv = vec2(b, vMapUv.y);
-
-        b = b * 2.0 - 1.0;     // -1.0 ~ 1.0
-        b = b * 3.0;           // -xxx ~ xxx
-        b = sigmoid(b);         // 0.0 ~ 1.0
+        float X = vMapUv.x * m; // 0.0 ~ 6.0
+        float x = fract(X);     // 0.0 ~ 1.0
+        float y = vMapUv.y;     // 0.0 ~ 1.0
+        vec2 uv = vec2(x, y);
+        x = x * 2.0 - 1.0;      // -1.0 ~ 1.0
+        x = x * 3.0;            // -xxx ~ xxx
+        x = sigmoid(x);         // 0.0 ~ 1.0
 
         vec4 sample0 = texture2D( textures[0], uv );
         vec4 sample1 = texture2D( textures[1], uv );
@@ -20,14 +20,12 @@ export const map_fragment = /* GLSL */ `
         vec4 sample5 = texture2D( textures[5], uv );
         vec4 col = vec4(0.0);
 
-
-
-        if (a < 1.0)      col = mix(sample0, sample1, b);
-        else if (a < 2.0) col = mix(sample1, sample2, b);
-        else if (a < 3.0) col = mix(sample2, sample3, b);
-        else if (a < 4.0) col = mix(sample3, sample4, b);
-        else if (a < 5.0) col = mix(sample4, sample5, b);
-        else              col = mix(sample5, sample0, b);
+        if      (X < 1.0) col = mix(sample0, sample1, x);
+        else if (X < 2.0) col = mix(sample1, sample2, x);
+        else if (X < 3.0) col = mix(sample2, sample3, x);
+        else if (X < 4.0) col = mix(sample3, sample4, x);
+        else if (X < 5.0) col = mix(sample4, sample5, x);
+        else              col = mix(sample5, sample0, x);
 
         diffuseColor *= col;
 #endif
