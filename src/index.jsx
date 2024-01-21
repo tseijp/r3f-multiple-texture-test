@@ -5,7 +5,8 @@ import { createRoot } from "react-dom/client";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { Leva } from "leva";
 import { OrbitControls, Environment } from "@react-three/drei";
-import { ShaderHelper } from "./helpers/ShaderHelper";
+import { ShaderHelper, UniformHelper } from "./helpers";
+import  * as SHADERS from "./shaders";
 
 const TEXTURES = [
   "/Brick.jpg",
@@ -22,15 +23,12 @@ const Sphere = () => {
   return (
     <mesh name="sphere">
       <boxGeometry />
-      {textures.map((texture, index) => (
-        <meshBasicMaterial
-          name="mat"
-          key={index}
-          map={texture}
-          attach={`material-${index}`}
-        />
-      ))}
-      <ShaderHelper />
+      <meshBasicMaterial
+        name="mat"
+        map={textures[0]}
+      />
+      <ShaderHelper {...SHADERS} />
+      <UniformHelper xxx={1} />
     </mesh>
   );
 };
