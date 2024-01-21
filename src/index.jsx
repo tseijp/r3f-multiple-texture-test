@@ -9,12 +9,12 @@ import { ShaderHelper, UniformHelper } from "./helpers";
 import  * as SHADERS from "./shaders";
 
 const TEXTURES = [
+  "/Rust.jpg",
   "/Brick.jpg",
   "/Cracks.jpg",
-  "/Metal.jpg",
-  "/Stone.jpg",
-  "/Rust.jpg",
   "/Wood.jpg",
+  "/Stone.jpg",
+  "/Metal.jpg",
 ];
 
 const Sphere = () => {
@@ -22,13 +22,10 @@ const Sphere = () => {
 
   return (
     <mesh name="sphere">
-      <boxGeometry />
-      <meshBasicMaterial
-        name="mat"
-        map={textures[0]}
-      />
+      <torusKnotGeometry />
+      <meshBasicMaterial name="mat" map={textures[0]} />
       <ShaderHelper {...SHADERS} />
-      <UniformHelper xxx={1} />
+      <UniformHelper xxx={1} textures={textures} />
     </mesh>
   );
 };

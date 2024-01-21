@@ -126,22 +126,24 @@ const _onChange = (key, ref) => {
 
   return onChange;
 };
+
 export const props2config = (props, ref) => {
   const ret = {};
 
   for (const key in props) {
     const value = props[key];
+    if (typeof value !== "number") continue;
     ret[key] = { value, onChange: _onChange(key, ref) };
   }
 
   return ret;
 };
 
-export const props2uniforms = (config) => {
+export const props2uniforms = (props) => {
   const ret = {};
 
-  for (const key in config) {
-    const value = config[key];
+  for (const key in props) {
+    const value = props[key];
     ret[key] = { value };
   }
 
